@@ -1,0 +1,53 @@
+
+// 一 js版本 的渲染
+
+
+
+// 1. 这两个导入的时候, 接收的成员名称, 必须这么写.
+import React from 'react'       // 创建组件 / 虚拟dom元素 / 生命周期
+import ReactDOM from 'react-dom'    // 把创建好的 组件 和 虚拟DOM 放到页面上展示
+
+// 2. 创建虚拟DOM:
+/**
+ * 参数1: 创建元素的类型, 字符串, 表示元素名称.
+ * 参数2: 是一个对象 或者 null, 表示 当前这个 DOM 元素的属性.
+ * 参数3: 子节点.(包括 其他 虚拟DOM 获取 文本子节点)
+ * 参数n: 其他子节点
+ */
+
+ // eg: 如果要创建一个 <h1 id = "myh1" title="this is a h1"> 这是一个大大的H1</h1>
+
+// const myh1 = React.createElement('h1', null, '这是一个大大的h1')    // 测试 参数2 : null 
+const myh1 = React.createElement('h1', {
+    id: 'myh1',
+    title: 'this is a h1'
+}, '这是一个大大的h1')    // 测试 参数2 : {} 
+
+// 如果想创建一个div, 把上面的 h1 放进去: 
+const myDiv = React.createElement('div', null, '我是一个div, 下一个参数是我要放的h1对象', myh1)
+
+// 3. 使用 ReactDOM 把虚拟 DOM 渲染到页面上
+    /**
+     * 参数1 : 要渲染的那个虚拟 DOM 元素
+     * 参数2 : 指定页面上的一个 DOM 对象, 当做容器.
+     */
+
+
+// ReactDOM.render(myh1, '#app')   
+/**
+ * 上一行写法 , 报错: Target container is not a DOM element.
+ * 因此, 可能第二个参数不是一个选择器, 而是一个dom元素. 
+ * 因此 尝试下一行写法: 
+ */
+
+ // 渲染h1: 
+// ReactDOM.render(myh1, document.getElementById('app'))
+
+// 渲染: mydiv: 
+ReactDOM.render(myDiv, document.getElementById('app'))
+
+
+/**
+ * 但是 上述方法 , 很麻烦, 渲染 页面上的 DOM 结构, 最好的方式, 就是 写 HTML 代码
+ * 因此; 见 index.js 的 html 版本
+ */

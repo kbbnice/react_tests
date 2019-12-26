@@ -1,0 +1,13 @@
+// 假设main.js 还是入口文件 
+/**
+ * 如果是main.js 会报错. 
+ * 因为webpack4.x 提供了 约定大于配置的概念
+ * 约定了: 
+ * 1. 默认打包入口是: ./src/index.js;
+ */
+console.log('oook')
+
+/**
+ * webpack-dev-server 打包好的main.js是托管到了内存中, 所以项目根目录中没有main.js
+ * 可以认为, 在项目根目录中, 有一个看不见的main.js.
+ */
