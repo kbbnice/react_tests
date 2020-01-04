@@ -1,3 +1,5 @@
+import './index.css'
+
 
 function createEl() {
     let body = document.body
