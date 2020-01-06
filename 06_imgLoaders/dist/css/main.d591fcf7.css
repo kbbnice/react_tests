@@ -1,0 +1,38 @@
+.box {
+  border: 1px solid grey;
+  -webkit-box-shadow: 1px 1px 0 green;
+  -moz-box-shadow: 1px 1px 0 green;
+  box-shadow: 1px 1px 0 green;
+  background-color: #ffeeee;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: url(/dist/imgs/1.jpg);
+}
+::-webkit-input-placeholder {
+  color: red;
+}
+:-moz-placeholder {
+  color: red;
+}
+::-moz-placeholder {
+  color: red;
+}
+:-ms-input-placeholder {
+  color: red;
+}
+::-ms-input-placeholder {
+  color: red;
+}
+::placeholder {
+  color: red;
+}
+
+body {
+  background-color: #cbffff;
+}
+.box {
+  background-color: #fff;
+}

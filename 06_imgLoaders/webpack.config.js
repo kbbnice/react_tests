@@ -21,6 +21,15 @@ const miniCssPlugin = new MiniCssExtractPlugin({
 })
 
 
+// 引入复制无需编译的文件目录的插件
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+const copyPlugin = new CopyWebpackPlugin([{
+    from: path.resolve(process.cwd(), 'src/static'),
+    to: path.resolve(process.cwd(), 'dist/static')
+}])
+
+
 module.exports = {
     mode: 'development',
     entry: './src/index.js',
@@ -30,7 +39,8 @@ module.exports = {
     },
     plugins: [
         htmlPlugin,
-        miniCssPlugin
+        miniCssPlugin,
+        copyPlugin,
     ],
     module: {
         rules: [
@@ -78,7 +88,60 @@ module.exports = {
                      */
                 ],
 
+            },
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 80,
+                            name() {
+
+                                // 如果是生产环境, 就不添加dist , 如果是 开发环境, 就在图片目录加上dist
+                                if (process.env.NODE_ENV === 'development') {
+                                    return 'imgs/[name].[ext]'
+                                } else {
+                                    return '[name].[ext]'
+                                }
+                            },
+                            publicPath: '/'
+                        }
+                    },
+
+                    // 如果同时使用 file-loader 和 url-loader ,则会同时使用两个 loader 编译.
+                    // 因为 url-loader 包含了 file-loader ,可以使用file-loader的所有options.
+
+                    // {
+                    //     loader: 'file-loader',
+                    //     options: {
+                    //         name: 'imgs/[name].[ext]',
+                    //         publicPath: '/dist/'
+                    //         // 生成的css文件中图片路径是 publicPach + name
+                    //     }
+                    // },
+
+
+                ]
+            },
+            // babel 配置
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/, // 必须排除 exclude 
+                // include: 只能包含某文件夹(文件)才解析
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: [] // 当学到react 时, 可能会用到相应插件支持jsx语法.(目前没用到)
+                        /**
+                         * 或可以建一个bael
+                         */
+                    }
+                }
             }
+
         ]
     },
     devServer: {
@@ -107,4 +170,17 @@ module.exports = {
     "last 8 version"
   ]
  * 2. 原理: 去调用 can I use 的 API.
+
+ url-loader : 会将图片转为base64
  */
+
+
+/**
+ * copy-webpack-plugin // 直接复制文件.不编译的插件
+ */
+
+ /**
+  * webpack-merge-plugin
+  * 合并多个webpack文件
+  * 
+  */
